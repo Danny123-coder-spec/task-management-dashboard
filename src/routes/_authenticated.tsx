@@ -3,14 +3,6 @@ import { useSelector } from 'react-redux'
 import { type RootState } from '../store'
 import { Layout } from '../components/Layout'
 
-// Define the type for the auth slice
-interface AuthState {
-  isAuthenticated: boolean;
-  id: number;
-  token: string;
-  // Add other fields as needed
-}
-
 export const Route = createFileRoute('/_authenticated')({
   beforeLoad: ({ context }) => {
     const state = context.store.getState() as RootState

@@ -6,25 +6,13 @@ import { useGetTasksQuery } from '../store/api/tasksApi'
 import { type RootState } from '../store'
 import { logout } from '../store/slices/authSlice'
 
-
-// Define the type for the auth slice
-interface AuthState {
-  id: number;
-  token: string;
-  isAuthenticated: boolean;
-  user?: {
-    id: number;
-    // Add other user fields as needed
-  };
-}
-
 export const Sidebar = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector((state: RootState) => state.auth.user)
   const { data: tasksData, isLoading } = useGetTasksQuery({ userId: user?.id })
 
-  // Organize tasks by status
+  //This will basically organized tasks by status
   const todoTasks = tasksData?.todos?.filter((task: any) => !task.completed) || []
   const completedTasks = tasksData?.todos?.filter((task: any) => task.completed) || []
 
@@ -44,7 +32,7 @@ export const Sidebar = () => {
           </Link>
         </Button>
 
-        {/* Tasks Section - Organized by folders */}
+        {/* Tasks Section Organized by folders */}
         <div className="mt-6 space-y-4">
           {/* To Do Tasks Folder */}
           <div>
