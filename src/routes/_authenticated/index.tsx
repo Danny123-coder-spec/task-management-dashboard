@@ -250,7 +250,7 @@ function Dashboard() {
       {/* Header Section */}
       <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold mb-2">
+          <h1 className="lg:text-3xl md:text-2xl text-xl font-bold mb-2">
             {getGreeting()}, {user?.firstName || "User"}!
           </h1>
           <p className="text-muted-foreground">
@@ -259,7 +259,7 @@ function Dashboard() {
         </div>
 
         {/* Filter Controls */}
-        <div className="flex items-center gap-4">
+        <div className="flex  items-center gap-4">
           <Select
             value={filterStatus}
             onValueChange={(value) =>
@@ -284,7 +284,7 @@ function Dashboard() {
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <Button
-                size="lg"
+                size="sm"
                 className="flex items-center cursor-pointer gap-2"
               >
                 <Plus className="h-5 w-5" />
@@ -393,7 +393,7 @@ function Dashboard() {
       {/* Main Dashboard Grid */}
       <div className="flex flex-col gap-6">
         {/* Recent Tasks */}
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="bg-card rounded-lg border p-6">
             <div className="flex items-center gap-2 mb-4">
               <Clock className="h-5 w-5 text-muted-foreground" />
@@ -666,7 +666,7 @@ function Dashboard() {
           setEditState({ open: v, task: v ? editState.task : null })
         }
       >
-        <DialogContent className="max-w-md">
+        <DialogContent className="lg:max-w-md max-w-[22rem]">
           <DialogTitle>Edit Task</DialogTitle>
           <form
             onSubmit={editForm.handleSubmit(onEditSubmit)}

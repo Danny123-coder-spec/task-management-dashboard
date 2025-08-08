@@ -3,64 +3,65 @@
 
 /* Inter font faces */
 @font-face {
-  font-family: 'Inter';
-  src: url('./assets/fonts/Inter_18pt-Regular.ttf') format('truetype');
+  font-family: "Inter";
+  src: url("./assets/fonts/Inter_18pt-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Inter';
-  src: url('./assets/fonts/Inter_18pt-Medium.ttf') format('truetype');
+  font-family: "Inter";
+  src: url("./assets/fonts/Inter_18pt-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Inter';
-  src: url('./assets/fonts/Inter_18pt-SemiBold.ttf') format('truetype');
+  font-family: "Inter";
+  src: url("./assets/fonts/Inter_18pt-SemiBold.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Inter';
-  src: url('./assets/fonts/Inter_18pt-Bold.ttf') format('truetype');
+  font-family: "Inter";
+  src: url("./assets/fonts/Inter_18pt-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Inter';
-  src: url('./assets/fonts/Inter_24pt-Regular.ttf') format('truetype');
+  font-family: "Inter";
+  src: url("./assets/fonts/Inter_24pt-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Inter';
-  src: url('./assets/fonts/Inter_24pt-Medium.ttf') format('truetype');
+  font-family: "Inter";
+  src: url("./assets/fonts/Inter_24pt-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Inter';
-  src: url('./assets/fonts/Inter_24pt-SemiBold.ttf') format('truetype');
+  font-family: "Inter";
+  src: url("./assets/fonts/Inter_24pt-SemiBold.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Inter';
-  src: url('./assets/fonts/Inter_24pt-Bold.ttf') format('truetype');
+  font-family: "Inter";
+  src: url("./assets/fonts/Inter_24pt-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
-html, body {
-  font-family: 'Inter', system-ui, sans-serif;
+html,
+body {
+  font-family: "Inter", system-ui, sans-serif;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -105,19 +106,20 @@ html, body {
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --primary: #5c47cd;
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
+  --background: oklch(0.99 0 0);
+  --sidebar: #fcfcfc;
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
@@ -139,55 +141,81 @@ html, body {
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
+  --background: #001e2b;
+  --foreground: #e1ecf2;
 
+  --card: #0a2d3a;
+  --card-foreground: #e1ecf2;
+
+  --popover: #0a2d3a;
+  --popover-foreground: #e1ecf2;
+
+  --primary: #5c47cd;
+  --primary-foreground: #ffffff;
+
+  --secondary: #1a3a4a;
+  --secondary-foreground: #e1ecf2;
+
+  --muted: #1a3a4a;
+  --muted-foreground: #8fa7b3;
+
+  --accent: #1a3a4a;
+  --accent-foreground: #e1ecf2;
+
+  --destructive: #e53e3e; /* Standard red for destructive actions */
+  --destructive-foreground: #ffffff;
+
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #5c47cd; /* Ring color matching primary */
+
+  --chart-1: #5c47cd; /* Primary color for chart 1 */
+  --chart-2: #4fd1c5; /* Teal for chart 2 */
+  --chart-3: #f6ad55; /* Amber for chart 3 */
+  --chart-4: #f687b3; /* Pink for chart 4 */
+  --chart-5: #68d391; /* Green for chart 5 */
+
+  --sidebar: #0a2d3a; /* Slightly lighter than background */
+  --sidebar-foreground: #e1ecf2;
+  --sidebar-primary: #5c47cd;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1a3a4a;
+  --sidebar-accent-foreground: #e1ecf2;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #5c47cd;
+}
 
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: #444444 transparent;
-}
-
-/* Chrome, Edge, Safari */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
-  background: transparent;
+  scrollbar-color: rgba(92, 71, 205, 0.3) transparent;
+  
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #444444;
+  background: rgba(92, 71, 205, 0.3);
   border-radius: 8px;
+  transition: background 0.2s ease;
 }
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(92, 71, 205, 0.5);
+}
+
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(92, 71, 205, 0.4);
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(92, 71, 205, 0.6);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+  
+}
+
 
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
@@ -197,7 +225,6 @@ html, body {
   background: transparent;
 }
 
-/* Show scrollbar arrows (up/down) */
 .custom-scrollbar::-webkit-scrollbar-button:single-button:vertical:decrement {
   display: block;
   height: 12px;
@@ -215,5 +242,19 @@ html, body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .glass-effect {
+    @apply bg-background/80 backdrop-blur-md border border-border/50;
+  }
+
+  .hover-effect {
+    @apply transition-all duration-200 ease-in-out hover:bg-primary/10;
+  }
+
+  .card-shadow {
+    @apply shadow-lg shadow-primary/5;
   }
 }
