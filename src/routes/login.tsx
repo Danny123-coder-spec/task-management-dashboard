@@ -64,7 +64,6 @@ function LoginPage() {
           token: result.accessToken,
         })
       );
-
       navigate({ to: "/" });
     } catch (err: any) {
       setError(err?.data?.message || "Login failed. Please try again.");
@@ -72,17 +71,17 @@ function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="flex items-center justify-center mb-4">
-            <CheckSquare className="h-8 w-8 text-blue-600 mr-2" />
-            <span className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              TaskBoard
-            </span>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted/30 p-4">
+      <Card className="w-full max-w-md border-border/50 shadow-lg">
+        <CardHeader className="text-center space-y-3">
+          <div className="flex items-center justify-center mb-2">
+            <CheckSquare className="h-8 w-8 text-primary" />
+            <span className="text-2xl font-bold ml-2">TaskBoard</span>
           </div>
-          <CardTitle>Welcome back</CardTitle>
-          <CardDescription>Sign in to your account to continue</CardDescription>
+          <CardTitle className="text-2xl font-semibold">Welcome back</CardTitle>
+          <CardDescription className="text-muted-foreground">
+            Sign in to your account to continue
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -92,6 +91,7 @@ function LoginPage() {
                 id="username"
                 type="text"
                 placeholder="Enter your username"
+                className={errors.username ? "border-destructive" : ""}
                 {...register("username", {
                   required: "Username is required",
                   minLength: {
@@ -99,10 +99,9 @@ function LoginPage() {
                     message: "Username must be at least 3 characters",
                   },
                 })}
-                className="bg-none"
               />
               {errors.username && (
-                <p className="text-sm text-red-600">
+                <p className="text-sm text-destructive">
                   {errors.username.message}
                 </p>
               )}
@@ -113,7 +112,8 @@ function LoginPage() {
               <Input
                 id="password"
                 type="password"
-                placeholder="Enter your password"
+                placeholder="••••••••"
+                className={errors.password ? "border-destructive" : "" }
                 {...register("password", {
                   required: "Password is required",
                   minLength: {
@@ -123,7 +123,7 @@ function LoginPage() {
                 })}
               />
               {errors.password && (
-                <p className="text-sm text-red-600">
+                <p className="text-sm text-destructive">
                   {errors.password.message}
                 </p>
               )}
@@ -136,18 +136,23 @@ function LoginPage() {
             )}
 
             <Button type="submit" className="w-full cursor-pointer" disabled={isLoading}>
-              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Sign In
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Signing in...
+                </>
+              ) : (
+                "Sign In"
+              )}
             </Button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
-            <p>Demo credentials:</p>
-            <p className="font-mono bg-gray-100 dark:bg-gray-800 p-2 rounded mt-2">
-              Username: emilys
-              <br />
-              Password: emilyspass
-            </p>
+          <div className="mt-6 text-center text-sm">
+            <p className="text-muted-foreground mb-2">Demo credentials:</p>
+            <div className="bg-muted/50 p-3 rounded-lg border border-border/50">
+              <p className="font-medium">Username: emilys</p>
+              <p className="font-medium">Password: emilyspass</p>
+            </div>
           </div>
         </CardContent>
       </Card>

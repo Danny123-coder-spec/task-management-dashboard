@@ -138,14 +138,10 @@ function TaskDetail() {
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <span className="text-lg font-semibold text-foreground">Task Details</span>
-        </div>
-
-       
+        </div> 
         <div className="rounded-xl bg-card border shadow-lg p-0 w-full">
-          
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b px-6 pt-6 pb-4">
             <div className="flex items-center gap-3">
-              
               <Select
                 value={taskStatus === 'todo' ? 'TO_DO' : taskStatus === 'in-progress' ? 'IN_PROGRESS' : 'COMPLETE'}
                 onValueChange={handleStatusChange}

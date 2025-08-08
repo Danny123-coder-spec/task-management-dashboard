@@ -29,11 +29,13 @@ A modern task management application built with React, TypeScript, and TanStack 
   - TanStack Router for type-safe routing
   - Redux Toolkit for state management
   - RTK Query for API data fetching
+  - React Hook Form for form management
+  - Tanstack router for routing between pages
   - Zod for runtime type validation
 
 ### UI Components
 - **Rich Component Library**
-  - Custom UI components built with Radix UI
+  - Custom UI components using shadcn ui
   - Responsive design with Tailwind CSS
   - Toast notifications with Sonner
   - Custom form controls
