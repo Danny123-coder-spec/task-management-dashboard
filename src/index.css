@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
-
 /* Inter font faces */
 @font-face {
   font-family: "Inter";
@@ -61,9 +59,27 @@
   font-display: swap;
 }
 
+
+html {
+  color-scheme: light dark;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
 html,
 body {
   font-family: "Inter", system-ui, sans-serif;
+  /* Disable transitions during theme switching to prevent flash */
+  transition: none !important;
+}
+
+/* Re-enable transitions after theme switching */
+html:not([data-theme-switching]) *,
+html:not([data-theme-switching]) *:before,
+html:not([data-theme-switching]) *:after {
+  transition-delay: 0ms !important;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -164,20 +180,20 @@ body {
   --accent: #1a3a4a;
   --accent-foreground: #e1ecf2;
 
-  --destructive: #e53e3e; /* Standard red for destructive actions */
+  --destructive: #e53e3e;
   --destructive-foreground: #ffffff;
 
   --border: rgba(255, 255, 255, 0.1);
   --input: rgba(255, 255, 255, 0.15);
-  --ring: #5c47cd; /* Ring color matching primary */
+  --ring: #5c47cd;
 
-  --chart-1: #5c47cd; /* Primary color for chart 1 */
-  --chart-2: #4fd1c5; /* Teal for chart 2 */
-  --chart-3: #f6ad55; /* Amber for chart 3 */
-  --chart-4: #f687b3; /* Pink for chart 4 */
-  --chart-5: #68d391; /* Green for chart 5 */
+  --chart-1: #5c47cd;
+  --chart-2: #4fd1c5;
+  --chart-3: #f6ad55;
+  --chart-4: #f687b3;
+  --chart-5: #68d391;
 
-  --sidebar: #0a2d3a; /* Slightly lighter than background */
+  --sidebar: #0a2d3a;
   --sidebar-foreground: #e1ecf2;
   --sidebar-primary: #5c47cd;
   --sidebar-primary-foreground: #ffffff;
@@ -190,7 +206,6 @@ body {
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: rgba(92, 71, 205, 0.3) transparent;
-  
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
@@ -203,7 +218,6 @@ body {
   background: rgba(92, 71, 205, 0.5);
 }
 
-
 .dark .custom-scrollbar::-webkit-scrollbar-thumb {
   background: rgba(92, 71, 205, 0.4);
 }
@@ -215,9 +229,7 @@ body {
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
   background: transparent;
-  
 }
-
 
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
@@ -258,5 +270,10 @@ body {
 
   .card-shadow {
     @apply shadow-lg shadow-primary/5;
+  }
+
+  /* Theme transition utilities */
+  .theme-transition {
+    transition: background-color 0ms, color 0ms, border-color 0ms !important;
   }
 }

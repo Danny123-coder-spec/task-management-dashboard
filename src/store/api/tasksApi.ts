@@ -9,7 +9,7 @@ export interface Task {
   todo: string;
   completed: boolean;
   userId: number;
-  status?: TaskStatus; // Add status field for three-state support
+  status?: TaskStatus;
   isLocal?: boolean;
 }
 
@@ -64,7 +64,7 @@ export const tasksApi = createApi({
     getTasks: builder.query<TasksResponse, { userId?: number }>({
       query: ({ userId }) => (userId ? `/user/${userId}` : ""),
       transformResponse: (response: TasksResponse, _meta, arg) => {
-        // Transform remote tasks to include status
+        
         const transformedRemoteTasks = response.todos.map((task) => ({
           ...task,
           status: getStatusFromCompleted(task.completed) as TaskStatus,
@@ -92,7 +92,7 @@ export const tasksApi = createApi({
     createTask: builder.mutation<Task, CreateTaskRequest>({
       queryFn: async (newTask) => {
         try {
-          // Try to create on server first
+         
           const serverPayload = {
             todo: newTask.todo,
             completed: getCompletedFromStatus(newTask.status || "todo"),
@@ -109,10 +109,10 @@ export const tasksApi = createApi({
 
           const serverTask = await response.json();
 
-          // Also save locally for persistence with status
+          // saving locally for persistence with status
           const localTask = {
             ...serverTask,
-            id: Date.now(), // Use timestamp as ID for local storage
+            id: Date.now(),
             status: newTask.status || "todo",
             isLocal: true,
           };
@@ -120,7 +120,7 @@ export const tasksApi = createApi({
 
           return { data: localTask };
         } catch (error) {
-          // Fallback to local storage only
+        
           const localTask = {
             ...newTask,
             id: Date.now(),
@@ -135,9 +135,40 @@ export const tasksApi = createApi({
       invalidatesTags: [{ type: "Task", id: "LIST" }],
     }),
     updateTask: builder.mutation<Task, UpdateTaskRequest>({
+      // Add optimistic update
+      onQueryStarted: async ({ id, ...patch }, { dispatch, queryFulfilled, getState }) => {
+        // Get the current user ID from state
+        const state = getState() as RootState;
+        const userId = state.auth.user?.id;
+        
+        // Optimistically update the cache
+        const patchResult = dispatch(
+          tasksApi.util.updateQueryData('getTasks', { userId }, (draft) => {
+            const task = draft.todos.find(t => t.id === id);
+            if (task) {
+              if (patch.todo !== undefined) task.todo = patch.todo;
+              if (patch.status !== undefined) {
+                task.status = patch.status;
+                task.completed = getCompletedFromStatus(patch.status);
+              }
+              if (patch.completed !== undefined) {
+                task.completed = patch.completed;
+                task.status = getStatusFromCompleted(patch.completed);
+              }
+            }
+          })
+        );
+
+        try {
+          await queryFulfilled;
+        } catch {
+          // Revert the optimistic update on error
+          patchResult.undo();
+        }
+      },
       queryFn: async ({ id, ...patch }) => {
         try {
-          // Prepare server payload
+          
           const serverPayload: any = {};
           if (patch.todo !== undefined) serverPayload.todo = patch.todo;
           if (patch.status !== undefined) {
@@ -155,7 +186,7 @@ export const tasksApi = createApi({
 
           const serverTask = await response.json();
 
-          // Prepare local update with status
+          //   Prepare local update with status
           const localUpdate: any = { ...patch };
           if (patch.status !== undefined) {
             localUpdate.completed = getCompletedFromStatus(patch.status);
@@ -164,7 +195,15 @@ export const tasksApi = createApi({
           
           taskStorage.updateLocalTask(id, localUpdate);
 
-          return { data: { ...serverTask, id, ...localUpdate } };
+          // Return the updated task with all properties
+          const updatedTask = { 
+            ...serverTask, 
+            id, 
+            ...localUpdate,
+            status: patch.status || getStatusFromCompleted(serverTask.completed)
+          };
+
+          return { data: updatedTask };
         } catch (error) {
          
           const localUpdate: any = { ...patch };
@@ -173,10 +212,22 @@ export const tasksApi = createApi({
           }
 
           taskStorage.updateLocalTask(id, localUpdate);
-          return { data: { id, ...localUpdate } as Task };
+          
+          // Return the updated task
+          const updatedTask = { 
+            id, 
+            ...localUpdate,
+            status: patch.status || (patch.completed !== undefined ? getStatusFromCompleted(patch.completed) : "todo")
+          } as Task;
+          
+          return { data: updatedTask };
         }
       },
-      invalidatesTags: (_result, _error, { id }) => [{ type: "Task", id }],
+      // Invalidate both the specific task and the list
+      invalidatesTags: (_result, _error, { id }) => [
+        { type: "Task", id },
+        { type: "Task", id: "LIST" }
+      ],
     }),
     deleteTask: builder.mutation<{ id: number; isDeleted: boolean }, number>({
       queryFn: async (id) => {
@@ -187,7 +238,7 @@ export const tasksApi = createApi({
 
           if (!response.ok) throw new Error("Server request failed");
 
-          // Also delete locally
+          // delete locally
           taskStorage.deleteLocalTask(id);
 
           return { data: { id, isDeleted: true } };
