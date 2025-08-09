@@ -1,6 +1,7 @@
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import { useForm } from "react-hook-form";
 import { type RootState } from "../store";
 import {
@@ -17,6 +18,7 @@ import { Alert, AlertDescription } from "../components/ui/alert";
 import { Loader2, CheckSquare } from "lucide-react";
 import { useLoginMutation } from "../store/api/authApi";
 import { setCredentials } from "../store/slices/authSlice";
+import { Eye, EyeOff } from "lucide-react";
 
 export const Route = createFileRoute("/login")({
   beforeLoad: ({ context }) => {
@@ -40,6 +42,12 @@ function LoginPage() {
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
   const [error, setError] = useState<string>("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
+  }, []);
 
   const {
     register,
@@ -109,19 +117,36 @@ function LoginPage() {
 
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                className={errors.password ? "border-destructive" : "" }
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters",
-                  },
-                })}
-              />
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  className={`pr-10 ${
+                    errors.password ? "border-destructive" : ""
+                  }`}
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    },
+                  })}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
+
               {errors.password && (
                 <p className="text-sm text-destructive">
                   {errors.password.message}
@@ -135,7 +160,11 @@ function LoginPage() {
               </Alert>
             )}
 
-            <Button type="submit" className="w-full cursor-pointer" disabled={isLoading}>
+            <Button
+              type="submit"
+              className="w-full cursor-pointer"
+              disabled={isLoading}
+            >
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
