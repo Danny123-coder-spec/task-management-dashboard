@@ -72,7 +72,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
         </div>
       </div>
 
-      {/* Right side - Theme toggle and user */}
+      {/* Theme toggle and user */}
       <div className="flex items-center gap-4 md:gap-4">
         <Button
           variant="outline"

@@ -135,13 +135,13 @@ export const tasksApi = createApi({
       invalidatesTags: [{ type: "Task", id: "LIST" }],
     }),
     updateTask: builder.mutation<Task, UpdateTaskRequest>({
-      // Add optimistic update
+      // Added optimistic update
       onQueryStarted: async ({ id, ...patch }, { dispatch, queryFulfilled, getState }) => {
-        // Get the current user ID from state
+        // Got the current user ID from state
         const state = getState() as RootState;
         const userId = state.auth.user?.id;
         
-        // Optimistically update the cache
+        // update the cache
         const patchResult = dispatch(
           tasksApi.util.updateQueryData('getTasks', { userId }, (draft) => {
             const task = draft.todos.find(t => t.id === id);
@@ -162,7 +162,7 @@ export const tasksApi = createApi({
         try {
           await queryFulfilled;
         } catch {
-          // Revert the optimistic update on error
+          // Revert the update on error
           patchResult.undo();
         }
       },

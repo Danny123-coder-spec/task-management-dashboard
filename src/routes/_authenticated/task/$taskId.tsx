@@ -183,7 +183,7 @@ function TaskDetail() {
                   </SelectItem>
                 </SelectContent>
               </Select>
-              {/* Task ID */}
+             
               <span className="ml-2 text-xs text-zinc-500 font-mono">#{task.id}</span>
             </div>
             <div className="flex items-center gap-2">
