@@ -2,6 +2,7 @@ import { Clock, List, Plus } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { type Task } from "../../store/api/tasksApi";
+import { Link } from "@tanstack/react-router";
 
 interface RecentTasksCardProps {
   tasks: Task[];
@@ -39,7 +40,9 @@ export function RecentTasksCard({
           tasks.map((task: Task) => {
             const taskStatus = getTaskStatus(task);
             return (
-              <div
+              <Link
+                to="/task/$taskId"
+                params={{ taskId: task.id.toString() }}
                 key={task.id}
                 className="flex items-center justify-between p-3 rounded-md bg-muted/50 hover:bg-muted/80 transition-colors"
               >
@@ -63,7 +66,7 @@ export function RecentTasksCard({
                     ? "In Progress"
                     : "To Do"}
                 </Badge>
-              </div>
+              </Link>
             );
           })
         ) : (
